@@ -1,18 +1,27 @@
-# project_ssh_backend
+# System Smart House - SSH
 
-O projeto System Smart Project(SSH), visa a integração da tecnologia atual com o a sua residência. Tendo à sim uma comunicação entre a pessoa e casa, por meio de um smartphone. As tecnologia que serão utilizadas serão discutidas durante o escopo do projeto.
+Esse é um repositório do sistema SSH, com o objetivo de integração da tecnologia atual com a sua residência.
 
 Por meio desse documento, será passado passos para executar o programa. 
 
-#Inicialização 
+## Docker
 
--Comando para instalar a dependencias:
+Está sendo utilizado nesse sistema o Docker para utilização de banco de dados. A imagem do banco que esta sendo utilizada é do MySQL. Para isso deve ser instalado o docker antes de inicializar a imagem.
 
-npm install
 
--Comando para iniciar a aplicação:
+## Inicialização 
 
+Está sendo utilizado nesse sistema o NodeJS para utilização do serviço.ALém está sendo utilizado frameworks terceiros como Express, Squelize para conexão HTTP e conexão ao banco de dados.
+
+* Comando para instalar a dependencias:
+ ```
+ npm install 
+ ```
+
+*  Comando para iniciar a aplicação:
+``
 npm start
+```
 
 
 
