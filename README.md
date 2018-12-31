@@ -19,7 +19,7 @@ Está sendo utilizado nesse sistema o NodeJS para utilização do serviço.ALém
  ```
 
 *  Comando para iniciar a aplicação:
-``
+```
 npm start
 ```
 
