@@ -68,4 +68,36 @@ Criando uma migration
 
     * ao finalizar insira o comando "npx sequelize db:migrate" para gerar no banco.
 
+
+
+
+
+
+---> Para tirar os defaults do Squelize na model, insiraesse comandos;
+
+    * freezeTableName: true, //Tira o padrão de deixar em plural
+    * timestamps: false, // Tira o default do createAt e updateAt
+    * tableName: "tb_person" // Deixa apenas utilizar essa tabel para essa model
+
+    ex:
+
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define(
+    "Person",
+    {
+      name: DataTypes.STRING,
+      password: DataTypes.STRING,
+      cpf: DataTypes.STRING,
+      email: DataTypes.STRING,
+      avatar: DataTypes.STRING
+    },
+    {
+      freezeTableName: true, //Tira o padrão de deixar em plural
+      timestamps: false, // Tira o default do createAt e updateAt
+      tableName: "tb_person" // Deixa apenas utilizar essa tabel para essa model
+    }
+  );
+};
+
+
   
