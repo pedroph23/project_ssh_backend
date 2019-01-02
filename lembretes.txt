@@ -1,0 +1,71 @@
+
+Adicionando o squelize  [ Model & Migration (Squelize) ]:
+
+    * yarn add sequelize
+    * yarn add sequelize-cli -D (é uma onterface q facilita a criação de tabelas no banco, as models e etc)
+    * npx sequelize init (inicializa o squelize, de forma q crie uma pasta de migration, seeders e o index,js na model(ainda cria a pasta model) )
+
+
+Ajustando a rota de conexão de banco com o Squelize (Configurando o Squelize).
+
+    * Depois de voce ter executado o "npx sequelize init", vai ser criado o config.json, troque para database.js e coloque as configurações
+      para conexão de banco.
+    
+    * O seguinte passo é criar um arquiva na parte raiz do projeto para mexer na rota.Crie o arquivo ".sequelizerc" .
+
+
+
+    * Coloque os caminhos (config,model,seeders,migration), para o squelize reconhecer e criar as tabelas e o banco.
+
+
+Criando uma migration
+
+     *Insira o comando para criar uma migration "npx sequelize migration:create --name=create-person"
+
+
++ Configuracoes do Squelize
+
+    * vá ate o index.js da model, la vc irá encontrar as configuraçoes de criação da model no banco e as migrations.
+
+    * retire "const env = process.env.NODE_ENV || 'development';", pois ja foi criado no index.js (na pasta raiz).
+    
+    * configure a rota, direcionando para a configuracao do banco 
+
+        ex: 
+        de -> const config = require(__dirname + "/../config/config.json")[env];
+        para -> const config = require("../../../config");
+
+    
+    
+    * retire o if e o else e deixe apenas o miolo q esta dentro do else
+
+        ex:
+
+        DE-> 
+        if (config.use_env_variable) {
+        sequelize = new Sequelize(process.env[config.use_env_variable], config);
+        } else {
+        sequelize = new Sequelize(
+            config.database,
+            config.username,
+            config.password,
+            config
+        );
+
+        PARA->
+        const sequelize = new Sequelize(
+            config.database,
+            config.username,
+            config.password,
+            config
+
+        }
+
+      * Crie a sua model.
+
+
+    * crie na magritation os campos para o banco 
+
+    * ao finalizar insira o comando "npx sequelize db:migrate" para gerar no banco.
+
+  
