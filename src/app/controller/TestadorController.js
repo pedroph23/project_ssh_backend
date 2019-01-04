@@ -11,6 +11,14 @@ class TestadorController {
       console.trace(e);
     }
   }
+
+  async getAll(req, res) {
+    try {
+      res.send(await tb_testador.findAll());
+    } catch (e) {
+      console.trace(e);
+    }
+  }
 }
 
 module.exports = new TestadorController();

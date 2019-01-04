@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define(
+  const Person = sequelize.define(
     "Person",
     {
       name: DataTypes.STRING,
@@ -14,4 +14,9 @@ module.exports = (sequelize, DataTypes) => {
       tableName: "tb_person" // Deixa apenas utilizar essa tabel para essa model
     }
   );
+  Person.associate = model => {
+    Person.hasMany(model.Card, { foreignKey: "fk_tb_person" });
+  };
+
+  return Person;
 };

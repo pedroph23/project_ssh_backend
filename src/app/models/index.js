@@ -7,12 +7,21 @@ const basename = path.basename(__filename);
 const config = require("../../../config/database");
 const db = {};
 
-const sequelize = new Sequelize(
-  config.development.database,
-  config.development.username,
-  config.development.password,
-  config.development
-);
+if (process.env.NODE_ENV === "developer") {
+  var sequelize = new Sequelize(
+    config.development.database,
+    config.development.username,
+    config.development.password,
+    config.development
+  );
+} else {
+  var sequelize = new Sequelize(
+    config.production.database,
+    config.production.username,
+    config.production.password,
+    config.production
+  );
+}
 
 fs.readdirSync(__dirname)
   .filter(file => {
