@@ -73,7 +73,21 @@ Criando uma migration
 
 
 
----> Para tirar os defaults do Squelize na model, insiraesse comandos;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---> Para tirar os defaults do Squelize na model, insiraesse comandos;   <------
 
     * freezeTableName: true, //Tira o padrão de deixar em plural
     * timestamps: false, // Tira o default do createAt e updateAt
@@ -81,6 +95,7 @@ Criando uma migration
 
     ex:
 
+//Model
 module.exports = (sequelize, DataTypes) => {
   return sequelize.define(
     "Person",
@@ -98,6 +113,36 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 };
+
+
+
+
+
+
+
+
+
+-----> INSERIR UM EVEROMENT<----
+
+    *Instale com o comando "npm i dotenv"
+
+    *Crie um arquivo .env na raiz
+
+    *Na service.js coloque o require para importar o dotenv -> "require('dotenv').config();"
+
+    
+
+
+-----> INSERIR REQUIRE-DIR<----
+
+Serve para reduzir o require.
+
+
+    *Instale o require-dir com o cmando "npm i require-dir"
+
+    * Apos instalado insira um index.js em um pasta q vc queria utilizar
+
+    *Insira no index a linha "module.exports = require("require-dir")();"
 
 
   
