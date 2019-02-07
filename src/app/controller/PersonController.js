@@ -1,4 +1,8 @@
 var { Person, Card } = require("../models");
+const personDTO = require("../models/dto/PersonDTO");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 class PersonController {
   constructor() {}
 
@@ -40,6 +44,45 @@ class PersonController {
     } catch (e) {
       console.trace(e);
     }
+  }
+  async getCardById(req, res) {
+    const { idCard } = req.params;
+    try {
+      return res.json(await Card.findByPk(idCard));
+    } catch (e) {
+      console.trace(e);
+    }
+  }
+
+  async getPersonIdByEmail(req, res) {
+    const { emailReq } = req.params;
+    try {
+      const person = await Person.findOne({ where: { email: emailReq } });
+      console.log(person);
+      res.send(personDTO.getIdByEmail(person));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async dynamicSearch(req, res) {
+    const { search } = req.params;
+    const result = await Card.findAll({
+      where: {
+        [Op.or]: {
+          flag: {
+            [Op.like]: ["%" + search + "%"]
+          },
+          numbercard: {
+            [Op.like]: ["%" + search + "%"]
+          },
+          cardholder: {
+            [Op.like]: ["%" + search + "%"]
+          }
+        }
+      }
+    });
+    res.json(result);
   }
 }
 module.exports = new PersonController();
