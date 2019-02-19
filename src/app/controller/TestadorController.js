@@ -19,6 +19,14 @@ class TestadorController {
       console.trace(e);
     }
   }
+
+  async test(req, res) {
+    await https.get("https://viacep.com.br/ws/01001000/json/", result => {
+      result.on("data", d => {
+        res.send("api:" + d);
+      });
+    });
+  }
 }
 
 module.exports = new TestadorController();

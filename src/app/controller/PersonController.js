@@ -1,4 +1,5 @@
 var { Person, Card } = require("../models");
+const util = require('../util/CardValidatorUtil')
 const personDTO = require("../models/dto/PersonDTO");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -7,21 +8,43 @@ class PersonController {
   constructor() {}
 
   async create(req, res) {
-    // try {
-    res.send(await Person.create(req.body));
-    // } catch {
-    //  res.send("Não foi possivel inseir");
-    //  console.trace(e);
-    // }
+    try {
+      res.send(await Person.create(req.body));
+    } catch (e) {
+      res.send("Não foi possivel inseir");
+      console.trace(e);
+    }
   }
 
   async createCard(req, res) {
-    // try {
-    res.send(await Card.create(req.body));
-    // } catch {
-    //  res.send("Não foi possivel inseir");
-    //  console.trace(e);
-    // }
+    try {
+      if(util.validateCard(req))
+        if (req.body.id != null) {
+          res.json(
+            Card.update(req.body, {
+              where: { id: req.body.id }
+            })
+          );
+      }
+      res.send(await Card.create(req.body));
+    } catch (e) {
+      res.status(400).json({ error: "It was not possible insert" });
+      console.trace(e);
+    }
+  }
+
+  async deleteCard(req, res) {
+
+    const { idCard } = req.params;
+
+    try {
+      const result = await Card.destroy({
+        where: { id: idCard }
+      });
+      return res.json(result);
+    } catch (e) {
+      console.trace(e);
+    }
   }
 
   async getAll(req, res) {
@@ -58,7 +81,6 @@ class PersonController {
     const { emailReq } = req.params;
     try {
       const person = await Person.findOne({ where: { email: emailReq } });
-      console.log(person);
       res.send(personDTO.getIdByEmail(person));
     } catch (e) {
       console.error(e);
