@@ -6,7 +6,8 @@ const configDB = {
     port: "3308",
     username: "root",
     password: "smarthouse2b12dev",
-    database: "systemSmartHouseDev"
+    database: "systemSmartHouseDev",
+    operatorsAliases: false
   },
   // Opção para ser utilizado o banco em producao
   production: {
@@ -15,7 +16,8 @@ const configDB = {
     port: "3306",
     username: "user212",
     password: "smarthouse2b12prod",
-    database: "systemSmartHouseProd"
+    database: "systemSmartHouseProd",
+    operatorsAliases: false
   }
 };
 

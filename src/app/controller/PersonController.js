@@ -1,23 +1,50 @@
 var { Person, Card } = require("../models");
+const util = require('../util/CardValidatorUtil')
+const personDTO = require("../models/dto/PersonDTO");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
+
 class PersonController {
   constructor() {}
 
   async create(req, res) {
-    // try {
-    res.send(await Person.create(req.body));
-    // } catch {
-    //  res.send("Não foi possivel inseir");
-    //  console.trace(e);
-    // }
+    try {
+      res.send(await Person.create(req.body));
+    } catch (e) {
+      res.send("Não foi possivel inseir");
+      console.trace(e);
+    }
   }
 
   async createCard(req, res) {
-    // try {
-    res.send(await Card.create(req.body));
-    // } catch {
-    //  res.send("Não foi possivel inseir");
-    //  console.trace(e);
-    // }
+    try {
+      if(util.validateCard(req))
+        if (req.body.id != null) {
+          res.json(
+            Card.update(req.body, {
+              where: { id: req.body.id }
+            })
+          );
+      }
+      res.send(await Card.create(req.body));
+    } catch (e) {
+      res.status(400).json({ error: "It was not possible insert" });
+      console.trace(e);
+    }
+  }
+
+  async deleteCard(req, res) {
+
+    const { idCard } = req.params;
+
+    try {
+      const result = await Card.destroy({
+        where: { id: idCard }
+      });
+      return res.json(result);
+    } catch (e) {
+      console.trace(e);
+    }
   }
 
   async getAll(req, res) {
@@ -40,6 +67,44 @@ class PersonController {
     } catch (e) {
       console.trace(e);
     }
+  }
+  async getCardById(req, res) {
+    const { idCard } = req.params;
+    try {
+      return res.json(await Card.findByPk(idCard));
+    } catch (e) {
+      console.trace(e);
+    }
+  }
+
+  async getPersonIdByEmail(req, res) {
+    const { emailReq } = req.params;
+    try {
+      const person = await Person.findOne({ where: { email: emailReq } });
+      res.send(personDTO.getIdByEmail(person));
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async dynamicSearch(req, res) {
+    const { search } = req.params;
+    const result = await Card.findAll({
+      where: {
+        [Op.or]: {
+          flag: {
+            [Op.like]: ["%" + search + "%"]
+          },
+          numbercard: {
+            [Op.like]: ["%" + search + "%"]
+          },
+          cardholder: {
+            [Op.like]: ["%" + search + "%"]
+          }
+        }
+      }
+    });
+    res.json(result);
   }
 }
 module.exports = new PersonController();
