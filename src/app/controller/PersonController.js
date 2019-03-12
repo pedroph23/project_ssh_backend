@@ -9,9 +9,9 @@ class PersonController {
 
   async create(req, res) {
     try {
-      res.send(await Person.create(req.body));
+      res.status(201).json(await Person.create(req.body));
     } catch (e) {
-      res.send("Não foi possivel inseir");
+      res.status(500).json({ error: "It was not possible insert" });
       console.trace(e);
     }
   }
@@ -26,9 +26,9 @@ class PersonController {
             })
           );
       }
-      res.send(await Card.create(req.body));
+      res.status(201).json(await Card.create(req.body));
     } catch (e) {
-      res.status(400).json({ error: "It was not possible insert" });
+      res.status(500).json({ error: "It was not possible insert" });
       console.trace(e);
     }
   }

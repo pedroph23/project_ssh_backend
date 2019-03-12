@@ -1,6 +1,11 @@
 const { tb_testador } = require("../models");
+const functions = require('firebase-functions');
+const {WebhookClient} = require('dialogflow-fulfillment');
+const {Card, Suggestion} = require('dialogflow-fulfillment');
 
 class TestadorController {
+ 
+
   constructor() {}
 
   async create(req, res) {
@@ -26,6 +31,16 @@ class TestadorController {
         res.send("api:" + d);
       });
     });
+  }
+
+  samara(request, response) {    
+    console.log(request);
+    const agent = new WebhookClient({req: request, res: response});
+    agent.add(`Welcome to my agent!`);
+    response.send('Opa')
+    console.log(agent);
+    console.log('Dialogflow Request headers: ' + JSON.stringify(req.headers));
+    console.log('Dialogflow Request body: ' + JSON.stringify(req.body));
   }
 }
 

@@ -16,7 +16,7 @@ routes.get("/", function(req, res) {
   );
 });
 
-routes.use(authMiddleware);
+// routes.use(authMiddleware);
 
 
 routes.post(api + "/person", controller.PersonController.create);
@@ -41,8 +41,15 @@ routes.get(api + "/teste/module", controller.TestadorController.test);
 
 
 //Rota de acesso aos componentes do NodeMCU
-routes.post(api + "/teste/module/request/", controller.ModulesController.request);
-routes.post(api + "/module/result/", controller.ModulesController.result);
+// routes.post(api + "/teste/module/request/", controller.ModulesController.request);
+// routes.post(api + "/module/result/", controller.ModulesController.result);
+routes.post(api + "/module/:action", controller.ModulesController.actionLed);
+
+
+
+//Rota Samara
+routes.get(api + "/google", controller.TestadorController.samara);
+
 
 
 module.exports = routes;

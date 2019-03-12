@@ -4,49 +4,50 @@ module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable("tb_card", {
       id: {
-        allowNull: true,
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       flag: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       cardholder: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       numbercard: {
-        allowNull: true,
-        type: Sequelize.STRING
+        allowNull: false,
+        type: Sequelize,
+        unique: true
       },
       validity: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       cvv: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       address: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       state: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       city: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       cep: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       country: {
-        allowNull: true,
+        allowNull: false,
         type: Sequelize.STRING
       },
       fk_tb_person: {
